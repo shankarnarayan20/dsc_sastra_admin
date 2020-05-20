@@ -1,22 +1,20 @@
-import 'package:dsc_sastra_admin/models/event_model.dart';
+import 'package:dsc_sastra_admin/models/resource_model.dart';
 import 'package:dsc_sastra_admin/ui/widgets/common_card.dart';
-import 'package:dsc_sastra_admin/viewmodels/view_event_view_model.dart';
+import 'package:dsc_sastra_admin/viewmodels/view_resource_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-class ViewEventView extends StatelessWidget {
-  const ViewEventView({Key key}) : super(key: key);
-
+class ViewResourceView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<ViewEventViewModel>.reactive(
-        viewModelBuilder: () => ViewEventViewModel(),
+    return ViewModelBuilder<ViewResourceViewModel>.reactive(
+        viewModelBuilder: () => ViewResourceViewModel(),
         builder: (context, model, child) => Scaffold(
               appBar: AppBar(
                 title: Text('View Events'),
               ),
-              body: StreamBuilder<List<Event>>(
-                stream: model.getEvent(),
+              body: StreamBuilder<List<Resource>>(
+                stream: model.getResources(),
                 builder: (context, snapshot) {
                   return snapshot.data == null
                       ? Center(
@@ -28,8 +26,10 @@ class ViewEventView extends StatelessWidget {
                       : SingleChildScrollView(
                           physics: BouncingScrollPhysics(),
                           child: Column(
-                            children:
-                                snapshot.data.map((e) => CommonCard(e.title,model.deleteEvent)).toList(),
+                            children: snapshot.data
+                                .map((r) => CommonCard(
+                                    r.title, model.deleteResource(r)))
+                                .toList(),
                           ),
                         );
                 },

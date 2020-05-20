@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "514277857027-mtiq39l7pv12rrabpkniedb0rmr1ivoi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dsc_sastra_admin",
+            "certificate_hash": "3fe302cfbc316f31caf1900234fad56797f97d43"
+          }
+        },
+        {
           "client_id": "514277857027-raepv9mnsl58r8pm4hg29u0q3r339hrh.apps.googleusercontent.com",
           "client_type": 3
         }

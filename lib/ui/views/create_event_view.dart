@@ -1,8 +1,9 @@
-import 'package:dsc_sastra_admin/ui/shared/ui_helpers.dart';
-import 'package:dsc_sastra_admin/ui/widgets/input_field.dart';
-import 'package:dsc_sastra_admin/viewmodels/create_event_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/viewmodel_provider.dart';
+import 'package:stacked/stacked.dart';
+
+import '../../viewmodels/create_event_view_model.dart';
+import '../shared/ui_helpers.dart';
+import '../widgets/input_field.dart';
 
 class CreateEventView extends StatelessWidget {
   final titleController = TextEditingController();
@@ -11,13 +12,12 @@ class CreateEventView extends StatelessWidget {
   final tagController = TextEditingController();
   final linkController = TextEditingController();
   final imgController = TextEditingController();
-  var date;
   final speakerController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider<CreateEventViewModel>.withConsumer(
-        viewModel: CreateEventViewModel(),
+    return ViewModelBuilder<CreateEventViewModel>.reactive(
+        viewModelBuilder: () => CreateEventViewModel(),
         builder: (context, model, child) => Scaffold(
             appBar: AppBar(
               title: Text("Add an Event"),
@@ -29,48 +29,43 @@ class CreateEventView extends StatelessWidget {
                   children: <Widget>[
                     verticalSpaceLarge,
                     InputField(
-                      placeholder: 'title',
+                      placeholder: 'Title',
                       controller: titleController,
                     ),
                     verticalSpaceSmall,
                     InputField(
-                      placeholder: 'desc',
+                      placeholder: 'Description',
                       controller: descController,
                     ),
                     verticalSpaceSmall,
                     InputField(
-                      placeholder: 'venue',
+                      placeholder: 'Venue',
                       controller: venueController,
                     ),
                     verticalSpaceSmall,
                     InputField(
-                      placeholder: 'tag',
+                      placeholder: 'Tag',
                       controller: tagController,
                     ),
                     verticalSpaceSmall,
                     InputField(
-                      placeholder: 'link',
+                      placeholder: 'Link',
                       controller: linkController,
                     ),
                     verticalSpaceSmall,
                     InputField(
-                      placeholder: 'img',
+                      placeholder: 'Image',
                       controller: imgController,
                     ),
                     verticalSpaceSmall,
                     RaisedButton(
-                        child: Text('Pick a date'),
-                        onPressed: () {
-                          date = showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2019),
-                            lastDate: DateTime(2050),
-                          );
-                        }),
+                      child: Text('Pick a date'),
+                      onPressed: model.pickdate(context),
+                    ),
+                    Text(model.timestamp.toString()),
                     verticalSpaceSmall,
                     InputField(
-                      placeholder: 'speaker',
+                      placeholder: 'Speaker',
                       controller: speakerController,
                     ),
                     verticalSpaceSmall,
@@ -82,7 +77,7 @@ class CreateEventView extends StatelessWidget {
                             desc: descController.text,
                             title: titleController.text,
                             tag: tagController.text,
-                            datetime: date,
+                            datetime: model.timestamp,
                             link: linkController.text,
                             speakers: speakerController.text,
                             venue: venueController.text,

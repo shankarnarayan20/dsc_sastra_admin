@@ -1,4 +1,4 @@
-import 'package:dsc_sastra_admin/ui/views/home_view.dart';
+import 'package:dsc_sastra_admin/ui/views/startup_view.dart';
 import 'package:flutter/material.dart';
 import 'package:dsc_sastra_admin/services/navigation_service.dart';
 import 'package:dsc_sastra_admin/services/dialog_service.dart';
@@ -7,7 +7,7 @@ import 'ui/router.dart';
 import 'locator.dart';
 
 void main() {
-  setupLocator(); 
+  setupLocator();
 
   runApp(MyApp());
 }
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
             builder: (context) => DialogManager(child: child)),
       ),
       navigatorKey: locator<NavigationService>().navigationKey,
-      home: HomeView(),
+      home: StartUpView(),
       onGenerateRoute: generateRoute,
     );
   }

@@ -14,4 +14,12 @@ class HomeViewModel extends BaseModel {
   navigateToViewEvent() {
     _navigationService.navigateTo(ViewEventRoute);
   }
+
+  navigateToCreateResource() {
+    _navigationService.navigateTo(CreateResourceRoute);
+  }
+
+  navigateToViewResource() {
+    _navigationService.navigateTo(ViewResourceRoute);
+  }
 }

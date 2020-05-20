@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dsc_sastra_admin/models/event_model.dart';
 import 'package:dsc_sastra_admin/services/dialog_service.dart';
 import 'package:dsc_sastra_admin/services/firestore_service.dart';
@@ -11,6 +12,10 @@ class CreateEventViewModel extends BaseModel {
   NavigationService _navigationService = locator<NavigationService>();
   FirestoreService _firestoreService = locator<FirestoreService>();
   DialogService _dialogService = locator<DialogService>();
+
+  Timestamp _timestamp;
+  Timestamp get timestamp => _timestamp;
+
   Future createanEvent({
     @required String title,
     @required String desc,
@@ -18,10 +23,9 @@ class CreateEventViewModel extends BaseModel {
     @required String tag,
     @required String link,
     @required String img,
-    @required DateTime datetime,
+    @required Timestamp datetime,
     @required String speakers,
   }) async {
-    setBusy(true);
     Event e = Event(
         dateTime: datetime,
         title: title,
@@ -32,19 +36,45 @@ class CreateEventViewModel extends BaseModel {
         tag: tag,
         venue: venue);
     var result = await _firestoreService.addEvent(e);
-    setBusy(false);
 
     if (result is String) {
       _dialogService.showDialog(
         title: "Unsuccessful",
-        description: result,
+        description: result ?? '',
       );
     } else {
       _dialogService.showDialog(
         title: 'Successful',
-        description: result,
+        description: result ?? '',
       );
       _navigationService.pop();
     }
+  }
+
+  pickdate(context) async {
+    DateTime temp = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2019),
+      lastDate: DateTime(2050),
+    );
+    TimeOfDay k = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(hour: 0, minute: 0),
+    );
+
+    _timestamp = Timestamp.fromDate(
+      DateTime(
+        DateTime.now().year,
+        temp.month,
+        temp.day,
+        k.hour,
+        k.minute,
+        0,
+        0,
+        0,
+      ),
+    );
+    notifyListeners();
   }
 }

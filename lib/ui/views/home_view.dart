@@ -1,6 +1,6 @@
 import 'package:dsc_sastra_admin/ui/shared/ui_helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:provider_architecture/viewmodel_provider.dart';
+import 'package:stacked/stacked.dart';
 import 'package:dsc_sastra_admin/viewmodels/home_view_model.dart';
 
 class HomeView extends StatelessWidget {
@@ -8,14 +8,14 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelProvider<HomeViewModel>.withConsumer(
-      viewModel: HomeViewModel(),
+    return ViewModelBuilder<HomeViewModel>.reactive(
+      viewModelBuilder: () => HomeViewModel(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: Center(child: Text('DSC SASTRA Admin App')),
         ),
         body: SafeArea(
-                  child: Center(
+          child: Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -35,9 +35,19 @@ class HomeView extends StatelessWidget {
               ),
               verticalSpaceLarge,
               RaisedButton(
-                child: Text('Send Notification'),
-                onPressed: () {},
-              )
+                child: Text('Add Resources'),
+                onPressed: () {
+                  model.navigateToCreateResource();
+                },
+              ),
+              verticalSpaceLarge,
+              RaisedButton(
+                child: Text('View Resources'),
+                onPressed: () {
+                  model.navigateToViewResource();
+                },
+              ),
+              verticalSpaceLarge,
             ],
           )),
         ),
