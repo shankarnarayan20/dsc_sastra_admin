@@ -1,5 +1,4 @@
 import 'package:dsc_sastra_admin/models/resource_model.dart';
-import 'package:dsc_sastra_admin/ui/widgets/common_card.dart';
 import 'package:dsc_sastra_admin/viewmodels/view_resource_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -11,7 +10,7 @@ class ViewResourceView extends StatelessWidget {
         viewModelBuilder: () => ViewResourceViewModel(),
         builder: (context, model, child) => Scaffold(
               appBar: AppBar(
-                title: Text('View Events'),
+                title: Text('View Resources'),
               ),
               body: StreamBuilder<List<Resource>>(
                 stream: model.getResources(),
@@ -27,13 +26,54 @@ class ViewResourceView extends StatelessWidget {
                           physics: BouncingScrollPhysics(),
                           child: Column(
                             children: snapshot.data
-                                .map((r) => CommonCard(
-                                    r.title, model.deleteResource(r)))
+                                .map((r) =>
+                                    ResourceCard(r, model.deleteResource))
                                 .toList(),
                           ),
                         );
                 },
               ),
             ));
+  }
+}
+
+class ResourceCard extends StatelessWidget {
+  final Resource resource;
+  final Function deleteFunction;
+  ResourceCard(this.resource, this.deleteFunction);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {},
+      child: Card(
+        elevation: 10,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          margin: EdgeInsets.all(16),
+          padding: EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                resource.title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: 24,
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () => deleteFunction(resource),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

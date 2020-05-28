@@ -6,4 +6,5 @@ const String ViewEventRoute = "ViewEvent";
 const String CreateResourceRoute = "CreateResource";
 const String ViewResourceRoute = "ViewResource";
 const String AddMembersRoute = "AddMembers";
+const String AddImageRoute = "AddImages";
 // Generate the views here

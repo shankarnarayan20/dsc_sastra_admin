@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dsc_sastra_admin/models/member_model.dart';
 import '../models/event_model.dart';
 import '../models/resource_model.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +28,28 @@ class FirestoreService {
     }
   }
 
+  Future addMember(Member member) async {
+    try {
+      await Firestore.instance.collection('members/').add(member.toJson());
+    } catch (e) {
+      if (e is PlatformException) return e.message;
+      return e.message;
+    }
+  }
+
+  Future getEventsDetails(String id) async {
+    try {
+      var eventsSnapshot = await _eventsCollectionReference.getDocuments();
+      if (eventsSnapshot.documents.isNotEmpty) {
+        return eventsSnapshot.documents
+            .map((snapshot) => Event.fromMap(snapshot.data))
+            .where((element) => element.docid == id);
+      }
+    } catch (e) {
+      if (e is PlatformException) return e.message;
+    }
+  }
+
   Future<String> getPasswordOnceOff() async {
     return (await Firestore.instance.document('admin/credentials').get())
         .data['admin_pass'];
@@ -49,8 +72,9 @@ class FirestoreService {
   removeEvent(String title) {
     _eventsCollectionReference.document(title).delete();
   }
+
   Stream<List<Resource>> getResource() {
-    return _eventsCollectionReference
+    return _resourcesCollectionReference
         .snapshots()
         .map(resourceModelFromQuerySnapshot);
   }

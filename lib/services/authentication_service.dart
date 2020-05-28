@@ -41,4 +41,8 @@ class AuthenticationService {
     _user = await FirebaseAuth.instance.currentUser();
     return _user != null;
   }
+
+  void logOutUser() {
+    FirebaseAuth.instance.signOut();
+  }
 }

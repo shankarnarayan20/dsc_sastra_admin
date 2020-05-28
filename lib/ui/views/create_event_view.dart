@@ -11,7 +11,6 @@ class CreateEventView extends StatelessWidget {
   final venueController = TextEditingController();
   final tagController = TextEditingController();
   final linkController = TextEditingController();
-  final imgController = TextEditingController();
   final speakerController = TextEditingController();
 
   @override
@@ -53,16 +52,31 @@ class CreateEventView extends StatelessWidget {
                       controller: linkController,
                     ),
                     verticalSpaceSmall,
-                    InputField(
-                      placeholder: 'Image',
-                      controller: imgController,
+                    RaisedButton(
+                        child: Text('Poster'),
+                        onPressed: () => model.addPoster(titleController.text)),
+                    Text(model.result == null
+                        ? 'No Image added'
+                        : 'Image Added'),
+                    verticalSpaceMedium,
+                    RaisedButton(
+                        child: Text('Upload'),
+                        onPressed: () =>
+                            model.uploadImage(titleController.text)),
+                    RaisedButton(
+                      child: Text('Clear'),
+                      onPressed: () => model.clearSelection(),
                     ),
                     verticalSpaceSmall,
                     RaisedButton(
                       child: Text('Pick a date'),
-                      onPressed: model.pickdate(context),
+                      onPressed: () {
+                        model.pickdate(context);
+                      },
                     ),
-                    Text(model.timestamp.toString()),
+                    Text(model.timestamp == null
+                        ? 'Date'
+                        : model.timestamp.toDate().toString()),
                     verticalSpaceSmall,
                     InputField(
                       placeholder: 'Speaker',
@@ -73,7 +87,6 @@ class CreateEventView extends StatelessWidget {
                         child: Text('Submit'),
                         onPressed: () {
                           model.createanEvent(
-                            img: imgController.text,
                             desc: descController.text,
                             title: titleController.text,
                             tag: tagController.text,

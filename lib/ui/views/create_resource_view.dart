@@ -8,7 +8,6 @@ import '../widgets/input_field.dart';
 class CreateResourceView extends StatelessWidget {
   final titleController = TextEditingController();
   final urlController = TextEditingController();
-  final imageurlController = TextEditingController();
   final categoryController = TextEditingController();
   final descController = TextEditingController();
 
@@ -37,11 +36,6 @@ class CreateResourceView extends StatelessWidget {
                     ),
                     verticalSpaceSmall,
                     InputField(
-                      placeholder: 'Image URL',
-                      controller: imageurlController,
-                    ),
-                    verticalSpaceSmall,
-                    InputField(
                       placeholder: 'Description',
                       controller: descController,
                     ),
@@ -52,16 +46,30 @@ class CreateResourceView extends StatelessWidget {
                     ),
                     verticalSpaceSmall,
                     RaisedButton(
+                      child: Text('Add Image'),
+                      onPressed: () =>
+                          model.addResourceImage(titleController.text),
+                    ),Text(model.result == null
+                        ? 'No Image added'
+                        : 'Image Added'),
+                    verticalSpaceMedium,
+                    RaisedButton(
+                        child: Text('Upload'),
+                        onPressed: () =>
+                            model.uploadImage(titleController.text)),
+                    RaisedButton(
+                      child: Text('Clear'),
+                      onPressed: () => model.clearSelection(),
+                    ),
+                    verticalSpaceLarge,
+                    RaisedButton(
                         child: Text('Submit'),
-                        onPressed: () {
-                          model.createaResource(
-                            desc: descController.toString(),
-                            imageurl: imageurlController.toString(),
-                            url: urlController.toString(),
-                            title: titleController.toString(),
-                            category: categoryController.toString(),
-                          );
-                        })
+                        onPressed: () => model.createaResource(
+                              desc: descController.text,
+                              url: urlController.text,
+                              title: titleController.text,
+                              category: categoryController.text,
+                            ))
                   ],
                 ),
               ),

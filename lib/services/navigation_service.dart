@@ -5,12 +5,17 @@ class NavigationService {
 
   GlobalKey<NavigatorState> get navigationKey => _navigationKey;
 
-   pop() {
+  pop() {
     return _navigationKey.currentState.pop();
   }
 
   Future<dynamic> navigateTo(String routeName, {dynamic arguments}) {
     return _navigationKey.currentState
         .pushNamed(routeName, arguments: arguments);
+  }
+
+  Future<dynamic> navigateToAndRemoveUntil(String routeName) {
+    return _navigationKey.currentState
+        .pushNamedAndRemoveUntil(routeName, (route) => false);
   }
 }

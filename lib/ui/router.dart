@@ -1,3 +1,4 @@
+import 'package:dsc_sastra_admin/ui/views/add_images.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/route_names.dart';
@@ -51,6 +52,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(
         routeName: settings.name,
         viewToShow: AddMembersView(),
+      );
+    case AddImageRoute:
+      return _getPageRoute(
+        routeName: settings.name,
+        viewToShow: AddImagesView(),
       );
     default:
       return MaterialPageRoute(

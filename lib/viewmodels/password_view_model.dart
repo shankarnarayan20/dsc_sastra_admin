@@ -1,5 +1,3 @@
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../constants/route_names.dart';
 import '../locator.dart';
 import '../services/dialog_service.dart';
@@ -14,10 +12,7 @@ class PasswordViewModel extends BaseModel {
     NavigationService _navigationService = locator<NavigationService>();
     String _password = await _firestoreService.getPasswordOnceOff();
     if (password == _password) {
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      await sharedPreferences.setBool('signedIn', true);
-      _navigationService.navigateTo(HomeViewRoute);
+      _navigationService.navigateToAndRemoveUntil(HomeViewRoute);
     } else {
       _dialogService.showDialog(
         title: 'Invalid password',

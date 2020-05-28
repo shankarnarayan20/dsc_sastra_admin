@@ -1,5 +1,4 @@
 import 'package:dsc_sastra_admin/models/event_model.dart';
-import 'package:dsc_sastra_admin/ui/widgets/common_card.dart';
 import 'package:dsc_sastra_admin/viewmodels/view_event_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -28,12 +27,52 @@ class ViewEventView extends StatelessWidget {
                       : SingleChildScrollView(
                           physics: BouncingScrollPhysics(),
                           child: Column(
-                            children:
-                                snapshot.data.map((e) => CommonCard(e.title,model.deleteEvent)).toList(),
+                            children: snapshot.data
+                                .map((e) => EventCard(e, model.deleteEvent))
+                                .toList(),
                           ),
                         );
                 },
               ),
             ));
+  }
+}
+
+class EventCard extends StatelessWidget {
+  final Event event;
+  final Function deleteFunction;
+  EventCard(this.event, this.deleteFunction);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {},
+      child: Card(
+        elevation: 10,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          margin: EdgeInsets.all(16),
+          padding: EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                event.title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: 24,
+                ),
+              ),
+              IconButton(
+                  icon: Icon(Icons.delete), onPressed: () => deleteFunction(event)),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

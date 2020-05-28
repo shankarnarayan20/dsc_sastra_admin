@@ -18,7 +18,10 @@ class StartUpViewModel extends BaseModel {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       bool k = sharedPreferences.getBool('singedIn') == null;
-      _navigationService.navigateTo(k ? HomeViewRoute : PasswordViewRoute);
+      if (k)
+        _navigationService.navigateToAndRemoveUntil(HomeViewRoute);
+      else
+        _navigationService.navigateTo(PasswordViewRoute);
     } else {
       _navigationService.navigateTo(GoogleSignInViewRoute);
     }
