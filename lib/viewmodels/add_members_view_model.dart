@@ -26,6 +26,7 @@ class AddMembersViewModel extends BaseModel {
     @required String linkedIn,
     @required String twitter,
     @required String cluster,
+    @required String clusterPath,
   }) async {
     Member m = Member(
         socialMedia: SocialMedia(
@@ -36,7 +37,7 @@ class AddMembersViewModel extends BaseModel {
         cluster: cluster,
         name: name,
         imageurl: downloadUrl);
-    var result = await _firestoreService.addMember(m);
+    var result = await _firestoreService.addMember(m, clusterPath);
 
     if (result is String) {
       _dialogService.showDialog(
@@ -104,6 +105,19 @@ class AddMembersViewModel extends BaseModel {
       if (snapshot.error == null) {
         storageTaskSnapshot = snapshot;
         downloadUrl = (await storageTaskSnapshot.ref.getDownloadURL());
+        if (downloadUrl.isNotEmpty) {
+          _dialogService.showDialog(
+            buttonTitle: 'OK',
+            description: 'Imade added successfully',
+            title: 'Successful',
+          );
+        } else {
+          _dialogService.showDialog(
+            buttonTitle: 'OK',
+            description: 'Unsuccessful',
+            title: 'Try uploading again',
+          );
+        }
       }
     } catch (e) {
       _dialogService.showDialog(

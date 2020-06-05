@@ -8,7 +8,7 @@ import 'package:stacked/stacked.dart';
 class AddImagesView extends StatelessWidget {
   final eventNameController = TextEditingController();
 
-  Cluster cluster = Cluster("","");
+  Cluster cluster = Cluster('','');
   void getSelectedCluster(Cluster _cluster) {
     cluster = _cluster;
   }

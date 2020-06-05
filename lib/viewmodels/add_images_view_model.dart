@@ -1,3 +1,4 @@
+import 'package:dsc_sastra_admin/services/firestore_service.dart';
 import 'package:dsc_sastra_admin/services/navigation_service.dart';
 import 'package:dsc_sastra_admin/ui/widgets/cluster_dropdown.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -14,6 +15,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class AddImagesViewModel extends BaseModel {
   int _len;
   DialogService _dialogService = locator<DialogService>();
+  FirestoreService _firestoreService = locator<FirestoreService>();
   NavigationService _navigationService = locator<NavigationService>();
   List<Asset> resultList;
   bool error = false;
@@ -42,7 +44,7 @@ class AddImagesViewModel extends BaseModel {
     }
   }
 
-  Future<List<String>> uploadImage(Cluster cluster, String eventName) async {
+  uploadImage(Cluster cluster, String eventName) async {
     if (eventName == null) {
       _dialogService.showDialog(
         buttonTitle: 'OK',
@@ -51,8 +53,7 @@ class AddImagesViewModel extends BaseModel {
       );
       return null;
     }
-    List<String> uploadUrls = [];
-
+    int i = 1;
     resultList.forEach((Asset asset) async {
       ByteData byteData = await asset.getByteData();
       List<int> imageData = byteData.buffer.asUint8List();
@@ -71,8 +72,9 @@ class AddImagesViewModel extends BaseModel {
         storageTaskSnapshot = snapshot;
         final String downloadUrl =
             await storageTaskSnapshot.ref.getDownloadURL();
-        uploadUrls.add(downloadUrl);
-
+        //uploadUrls.add(downloadUrl);
+        addToFirestore(downloadUrl, cluster, eventName, i);
+        i++;
         print('Upload success');
       } else {
         print('Error from image repo ${snapshot.error.toString()}');
@@ -85,7 +87,11 @@ class AddImagesViewModel extends BaseModel {
       title: 'Success',
     );
     _navigationService.pop();
-    return uploadUrls;
+  }
+
+  addToFirestore(String downloadUrl, Cluster cluster, String eventName, int i) {
+    String path = 'images/${cluster.id}/$eventName/image$i';
+    _firestoreService.addImages(downloadUrl, path);
   }
 
   void clearSelections() {

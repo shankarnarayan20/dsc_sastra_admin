@@ -137,6 +137,19 @@ class CreateEventViewModel extends BaseModel {
       if (snapshot.error == null) {
         storageTaskSnapshot = snapshot;
         downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+        if (downloadUrl.isNotEmpty) {
+          _dialogService.showDialog(
+            buttonTitle: 'OK',
+            description: 'Imade added successfully',
+            title: 'Successful',
+          );
+        } else {
+          _dialogService.showDialog(
+            buttonTitle: 'OK',
+            description: 'Unsuccessful',
+            title: 'Try uploading again',
+          );
+        }
       }
     } catch (e) {
       _dialogService.showDialog(

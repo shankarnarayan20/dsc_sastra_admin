@@ -15,7 +15,10 @@ class GoogleSignInView extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      FlutterLogo(size: 150),
+                      Image(
+                        image: AssetImage('assets/logo.png'),
+                        height: 50,
+                      ),
                       SizedBox(height: 50),
                       _signInButton(model),
                     ],
@@ -28,7 +31,9 @@ class GoogleSignInView extends StatelessWidget {
   Widget _signInButton(model) {
     return OutlineButton(
       splashColor: Colors.grey,
-      onPressed: (){model.signInWithGoogle();},
+      onPressed: () {
+        model.signInWithGoogle();
+      },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,
       borderSide: BorderSide(color: Colors.grey),

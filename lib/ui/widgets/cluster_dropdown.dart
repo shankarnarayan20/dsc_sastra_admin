@@ -64,23 +64,11 @@ class ClusterDropDownState extends State<ClusterDropDown> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 20.0,
-            ),
-            DropdownButton(
-              hint: Text('Select a cluster'),
-              value: _selectedCluster,
-              items: _dropdownMenuItems,
-              onChanged: onChangeDropdownItem,
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-          ],
+        child: DropdownButton(
+          hint: Text('Select a cluster'),
+          value: _selectedCluster,
+          items: _dropdownMenuItems,
+          onChanged: onChangeDropdownItem,
         ),
       ),
     );

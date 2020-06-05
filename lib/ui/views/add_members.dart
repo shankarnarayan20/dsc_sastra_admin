@@ -29,7 +29,7 @@ class AddMembersView extends StatelessWidget {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    verticalSpaceLarge,
+                    verticalSpaceMedium,
                     InputField(
                       controller: nameController,
                       placeholder: 'Name',
@@ -71,9 +71,10 @@ class AddMembersView extends StatelessWidget {
                       onPressed: () => model.addMember(
                         name: nameController.text,
                         instagram: instagramController.text,
-                        linkedIn: instagramController.text,
-                        twitter: instagramController.text,
-                        cluster: cluster.id,
+                        linkedIn: linkedInController.text,
+                        twitter: twitterController.text,
+                        cluster: cluster.name,
+                        clusterPath: cluster.id
                       ),
                     ),
                   ],

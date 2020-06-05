@@ -28,9 +28,20 @@ class FirestoreService {
     }
   }
 
-  Future addMember(Member member) async {
+  Future addMember(Member member, String clusterPath) async {
     try {
-      await Firestore.instance.collection('members/').add(member.toJson());
+      await Firestore.instance
+          .collection('members/$clusterPath/members')
+          .add(member.toJson());
+    } catch (e) {
+      if (e is PlatformException) return e.message;
+      return e.message;
+    }
+  }
+
+  Future addImages(String downloadUrl, String path) async {
+    try {
+      await Firestore.instance.document(path).setData({'url': downloadUrl});
     } catch (e) {
       if (e is PlatformException) return e.message;
       return e.message;
