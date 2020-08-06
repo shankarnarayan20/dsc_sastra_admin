@@ -31,8 +31,10 @@ class CreateEventViewModel extends BaseModel {
     @required String link,
     @required Timestamp datetime,
     @required String speakers,
+    @required String date,
   }) async {
     Event e = Event(
+        date: date,
         dateTime: datetime,
         title: title,
         desc: desc,

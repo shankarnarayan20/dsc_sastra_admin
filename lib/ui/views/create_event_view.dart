@@ -12,6 +12,7 @@ class CreateEventView extends StatelessWidget {
   final tagController = TextEditingController();
   final linkController = TextEditingController();
   final speakerController = TextEditingController();
+  final dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,10 @@ class CreateEventView extends StatelessWidget {
                       placeholder: 'Link',
                       controller: linkController,
                     ),
+                    InputField(
+                      placeholder: 'Date',
+                      controller: dateController,
+                    ),
                     verticalSpaceSmall,
                     RaisedButton(
                         child: Text('Poster'),
@@ -87,6 +92,7 @@ class CreateEventView extends StatelessWidget {
                         child: Text('Submit'),
                         onPressed: () {
                           model.createanEvent(
+                            date: dateController.text,
                             desc: descController.text,
                             title: titleController.text,
                             tag: tagController.text,

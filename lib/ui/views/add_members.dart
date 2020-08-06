@@ -36,6 +36,13 @@ class AddMembersView extends StatelessWidget {
                     ),
                     verticalSpaceLarge,
                     ClusterDropDown(getSelectedCluster),
+                    // verticalSpaceMedium,
+                    // RaisedButton(
+                    //   child: Text('Select date'),onPressed: () => model.selectYear()),
+                    // verticalSpaceMedium,
+                    // Text(model.year == null
+                    //     ? 'Please select a year'
+                    //     : ' Year : ${model.year}'),
                     verticalSpaceLarge,
                     InputField(
                       controller: instagramController,
@@ -69,13 +76,12 @@ class AddMembersView extends StatelessWidget {
                     RaisedButton(
                       child: Text('Submit'),
                       onPressed: () => model.addMember(
-                        name: nameController.text,
-                        instagram: instagramController.text,
-                        linkedIn: linkedInController.text,
-                        twitter: twitterController.text,
-                        cluster: cluster.name,
-                        clusterPath: cluster.id
-                      ),
+                          name: nameController.text,
+                          instagram: instagramController.text,
+                          linkedIn: linkedInController.text,
+                          twitter: twitterController.text,
+                          cluster: cluster.name,
+                          clusterPath: cluster.id),
                     ),
                   ],
                 )),

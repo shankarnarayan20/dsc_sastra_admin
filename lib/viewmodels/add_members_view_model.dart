@@ -19,6 +19,7 @@ class AddMembersViewModel extends BaseModel {
   NavigationService _navigationService = locator<NavigationService>();
   String downloadUrl;
   File result;
+  //DateTime year;
 
   addMember({
     @required String name,
@@ -52,6 +53,19 @@ class AddMembersViewModel extends BaseModel {
       _navigationService.pop();
     }
   }
+
+  // selectYear() {
+  //   CalendarDatePicker(
+  //     initialDate: DateTime(DateTime.now().year),
+  //     firstDate: DateTime(2017),
+  //     lastDate: DateTime(2030),
+  //     onDateChanged: (selectedYear) {
+  //       year = selectedYear;
+  //       notifyListeners();
+  //     },
+  //     initialCalendarMode: DatePickerMode.year,
+  //   );
+  // }
 
   addImage(String name) async {
     if (name.isEmpty) {
