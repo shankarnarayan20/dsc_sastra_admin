@@ -73,7 +73,7 @@ class CreateEventViewModel extends BaseModel {
 
     _timestamp = Timestamp.fromDate(
       DateTime(
-        DateTime.now().year,
+        temp.year,
         temp.month,
         temp.day,
         k.hour,
