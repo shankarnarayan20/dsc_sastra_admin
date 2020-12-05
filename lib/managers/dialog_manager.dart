@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:dsc_sastra_admin/locator.dart';
-import 'package:dsc_sastra_admin/models/dialog_models.dart';
-import 'package:dsc_sastra_admin/services/dialog_service.dart';
+
+import '../locator.dart';
+import '../models/dialog_models.dart';
+import '../services/dialog_service.dart';
 
 class DialogManager extends StatefulWidget {
   final Widget child;

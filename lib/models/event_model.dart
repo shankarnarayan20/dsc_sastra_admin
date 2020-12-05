@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Event {
-  String title, desc, venue, tag, link, img, speakers;
-  DateTime dateTime;
+  String title, desc, venue, tag, link, img, speakers, docid, date;
+  Timestamp dateTime;
   //List<dynamic> speakers;
 
   Event({
@@ -14,10 +14,13 @@ class Event {
     this.img,
     this.dateTime,
     this.speakers,
+    this.docid,
+    this.date,
   });
 
   Event.fromMap(Map<String, dynamic> map) {
-    dateTime = ((map['date'] as Timestamp) ?? Timestamp.now()).toDate();
+    dateTime = ((map['timestamp'] as Timestamp) ?? Timestamp.now());
+    date = map['date'];
     venue = map['venue'];
     img = map['img'];
     speakers = map['spkrs'];
@@ -29,7 +32,8 @@ class Event {
 
   Map<String, dynamic> toJson() {
     return {
-      'date': dateTime.toString(),
+      'date' : date,
+      'timestamp': dateTime,
       'venue': venue,
       'img': img,
       'spkrs': speakers,
@@ -38,9 +42,5 @@ class Event {
       'desc': desc,
       'title': title,
     };
-  }
-
-  Event.fromDocSnapShot(DocumentSnapshot dss) {
-    title = dss.data['title'];
   }
 }
