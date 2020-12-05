@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:dsc_sastra_admin/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -17,6 +17,7 @@ class AddMembersViewModel extends BaseModel {
   DialogService _dialogService = locator<DialogService>();
   FirestoreService _firestoreService = locator<FirestoreService>();
   NavigationService _navigationService = locator<NavigationService>();
+  StorageService _storageService = locator<StorageService>();
   String downloadUrl;
   File result;
   //DateTime year;
@@ -108,38 +109,9 @@ class AddMembersViewModel extends BaseModel {
       );
       return;
     }
-    try {
-      StorageReference reference = FirebaseStorage.instance
-          .ref()
-          .child('Members')
-          .child('$name' + Timestamp.now().millisecondsSinceEpoch.toString());
-      StorageUploadTask uploadTask = reference.putFile(result);
-      StorageTaskSnapshot storageTaskSnapshot;
-      StorageTaskSnapshot snapshot = await uploadTask.onComplete;
-      if (snapshot.error == null) {
-        storageTaskSnapshot = snapshot;
-        downloadUrl = (await storageTaskSnapshot.ref.getDownloadURL());
-        if (downloadUrl.isNotEmpty) {
-          _dialogService.showDialog(
-            buttonTitle: 'OK',
-            description: 'Imade added successfully',
-            title: 'Successful',
-          );
-        } else {
-          _dialogService.showDialog(
-            buttonTitle: 'OK',
-            description: 'Unsuccessful',
-            title: 'Try uploading again',
-          );
-        }
-      }
-    } catch (e) {
-      _dialogService.showDialog(
-        buttonTitle: 'OK',
-        description: e,
-        title: 'Error!!',
-      );
-    }
+    String _path;
+    _path = 'Members/$name' + Timestamp.now().millisecondsSinceEpoch.toString();
+    downloadUrl = _storageService.uploadSingleImageToStorage(_path, result);
   }
 
   void clearSelection() {

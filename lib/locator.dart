@@ -1,5 +1,6 @@
 import 'package:dsc_sastra_admin/services/authentication_service.dart';
 import 'package:dsc_sastra_admin/services/firestore_service.dart';
+import 'package:dsc_sastra_admin/services/storage_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dsc_sastra_admin/services/navigation_service.dart';
 import 'package:dsc_sastra_admin/services/dialog_service.dart';
@@ -11,4 +12,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => FirestoreService());
   locator.registerLazySingleton(() => AuthenticationService());
+  locator.registerLazySingleton(() => StorageService());
 }
